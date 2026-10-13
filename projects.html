@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Case Studies — ARBAZ ARSHAD · Game Developer</title>
+  <meta name="description" content="In-depth technical case studies by Arbaz Arshad — Game development systems, AI algorithms, computer vision pipelines, and robotics.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Case Studies — ARBAZ ARSHAD">
+  <meta property="og:description" content="Detailed architectural breakdowns of 6 shipped builds across games, AI, and robotics.">
+  <meta property="og:image" content="assets/images/p1-cobra.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2307080a' width='100' height='100' rx='16'/><text x='50' y='68' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='55' fill='%23e5ff00'>AA</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Case Studies Specific Layout */
+    .case-hero {
+      padding-top: 8rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .case-item {
+      padding: clamp(4rem, 8vw, 6.5rem) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .case-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .case-grid-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: start;
+    }
+
+    .case-image-container {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-card);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2rem;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .case-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .case-image-container:hover img {
+      transform: scale(1.04);
+    }
+
+    .case-body-text {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .case-body-text p {
+      margin-bottom: 1.25rem;
+    }
+
+    .case-spec-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-md);
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      position: sticky;
+      top: 6.5rem;
+    }
+
+    .case-spec-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.75rem;
+    }
+
+    .spec-table tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .spec-table td {
+      padding: 0.65rem 0;
+      font-size: 0.9rem;
+    }
+
+    .spec-table td:first-child {
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      width: 35%;
+      font-size: 0.78rem;
+    }
+
+    .spec-table td:last-child {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .highlights-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .highlights-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .highlights-list li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--accent-yellow);
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+      .case-grid-layout {
+        grid-template-columns: 1fr;
+      }
+      .case-spec-box {
+        position: static;
+      }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- ============ FULL-SCREEN MULTI-BLADE PAGE TRANSITION ============ -->
+  <div id="page-shutter" class="page-shutter" aria-hidden="true">
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+  </div>
+
+  <!-- ============ MOUSE PARTICLE & SPARK VFX CANVAS ============ -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- Background WebGL & Custom Cursor -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-noise" aria-hidden="true"></div>
+
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true">
+    <span>READ</span>
+  </div>
+
+  <!-- Header / Topbar -->
+  <header class="topbar scrolled" id="header">
+    <div class="wrap">
+      <a class="brand" href="index.html" data-cursor="HOME">
+        <span class="brand-dot"></span>
+        <span class="brand-title">ARBAZ<b>_ARSHAD</b></span>
+        <span class="brand-tag">CASE_STUDIES</span>
+      </a>
+
+      <div class="nav-cluster">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a class="nav-link" href="index.html#about">About</a></li>
+            <li><a class="nav-link active" href="index.html#projects">Works</a></li>
+            <li><a class="nav-link" href="index.html#skills">Toolbox</a></li>
+            <li><a class="nav-link" href="index.html#experience">Experience</a></li>
+            <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a class="flip-btn flip-btn-outline" href="index.html" data-cursor="BACK HOME">
+            <div class="flip-btn-inner">
+              <div class="flip-btn-face flip-btn-front" style="padding: 0.45rem 1rem; font-size:0.85rem;">
+                <span>← Home</span>
+              </div>
+              <div class="flip-btn-face flip-btn-back" style="padding: 0.45rem 1rem; font-size:0.85rem;">
+                <span>Index ↗</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Case Studies Banner -->
+    <section class="case-hero">
+      <div class="wrap">
+        <div style="font-family: var(--font-mono); color: var(--accent-yellow); font-size: 0.8rem; letter-spacing: 0.15em; margin-bottom: 0.75rem;">
+          ~/index / projects_deep_dive
+        </div>
+        <h1 class="sec-title" style="font-size: clamp(3rem, 7vw, 5.5rem); margin-bottom: 1rem;">
+          Selected Case Studies
+        </h1>
+        <p class="sec-sub">
+          Six technical architectures across game engine development, AI sensor integration, and computer vision robotics — the underlying engineering without the fluff.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ CASE 01: COBRA CARD GAME ============ -->
+    <article class="case-item" id="cobra-card">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p1-cobra.jpg" alt="Cobra Card Game Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 01 ] // UNITY 3D · C#</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">Cobra Card Game</h2>
+            <div class="case-body-text">
+              <p>
+                Cobra Card Game is a competitive multiplayer card title engineered around deterministic systems. Rather than relying on simple procedural logic, every single phase of play — dealing animations, client hand evaluation, turn progression, and final point calculation — is coordinated through formal explicit state machines.
+              </p>
+              <p>
+                The presentation layer runs on Unity's high-performance UI Toolkit setup, integrated with a deeply tuned DOTween animation pipeline. Card trajectories, hand fan layouts, and table physics maintain a tactile 60 FPS response, guaranteeing that matches remain completely synchronized as the table scales.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Unity 3D</span>
+              <span class="tag-pill">C#</span>
+              <span class="tag-pill">UI Toolkit</span>
+              <span class="tag-pill">DOTween</span>
+              <span class="tag-pill">State Machines</span>
+              <span class="tag-pill">Multiplayer Logic</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/01</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Genre</td><td>Multiplayer Card Game</td></tr>
+              <tr><td>Core Systems</td><td>State Machines · Scoring Algorithms</td></tr>
+              <tr><td>Engine</td><td>Unity 3D (C#)</td></tr>
+              <tr><td>UI Framework</td><td>UI Toolkit + DOTween</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>Deterministic turn lifecycle managed by hierarchical state machines.</li>
+              <li>Mathematical score calculation preventing out-of-sync discrepancies.</li>
+              <li>Fluid responsive card manipulation and physics-informed animations.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ CASE 02: ONLINE CHESS GAME ============ -->
+    <article class="case-item" id="online-chess">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p2-chess.jpg" alt="Online Chess Game Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 02 ] // REAL-TIME MULTIPLAYER</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">Online Chess Game</h2>
+            <div class="case-body-text">
+              <p>
+                An online competitive multiplayer chess platform developed in Unity featuring synchronized gameplay, player statistics databases, token and cosmetic systems, and custom AI behavior modes for offline practice.
+              </p>
+              <p>
+                The chess engine implements complete FIDE-compliant rules, including en passant, castling, pawn promotion, legal move calculation, check/checkmate verification, and stalemates. The netcode is engineered with an authoritative state architecture, ensuring latency does not desynchronize the board.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Unity 3D</span>
+              <span class="tag-pill">C#</span>
+              <span class="tag-pill">Multiplayer Netcode</span>
+              <span class="tag-pill">Turn-Based AI</span>
+              <span class="tag-pill">Move Validation Engine</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/02</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Genre</td><td>Turn-Based Competitive Strategy</td></tr>
+              <tr><td>Systems</td><td>FIDE Rule Verification · Netcode Sync · AI</td></tr>
+              <tr><td>Engine</td><td>Unity 3D (C#)</td></tr>
+              <tr><td>Networking</td><td>Real-time client-server synchronization</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>Zero-latency client move prediction with authoritative server verification.</li>
+              <li>Custom heuristic minimax AI opponent for single-player evaluation.</li>
+              <li>Responsive cross-platform 3D board interface with dynamic camera angles.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ CASE 03: DIGITAL BLACKJACK ============ -->
+    <article class="case-item" id="digital-blackjack">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p3-blackjack.jpg" alt="Digital Blackjack Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 03 ] // CASINO LOGIC & PROBABILITY</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">Digital Blackjack</h2>
+            <div class="case-body-text">
+              <p>
+                A high-fidelity implementation of the classic casino card game, engineered with rigorous probability mathematics and fair deck-shuffling algorithms. The engine eschews black-box randomness in favor of deterministic Fisher-Yates multi-deck shoes and real-time dealer bust probability calculations.
+              </p>
+              <p>
+                The UI is optimized for desktop and WebGL deployment, presenting players with clean telemetry, split-hand tracking, double-down logic, and insurance payouts in an elegant, distraction-free environment.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">C#</span>
+              <span class="tag-pill">.NET</span>
+              <span class="tag-pill">WebGL</span>
+              <span class="tag-pill">Probability Engine</span>
+              <span class="tag-pill">Deck Shuffling</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/03</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Genre</td><td>Casino Simulation & Probability</td></tr>
+              <tr><td>Systems</td><td>Fisher-Yates Shuffling · Statistical HUD</td></tr>
+              <tr><td>Language</td><td>C# / .NET</td></tr>
+              <tr><td>Target</td><td>Desktop & Responsive WebGL</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>Multi-deck shoe simulation adhering to standard casino rules.</li>
+              <li>Real-time mathematical probability analytics calculated per hand.</li>
+              <li>High-contrast visual table with responsive card placement layout.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ CASE 04: JAVA DESKTOP GAMES ============ -->
+    <article class="case-item" id="java-games">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p4-retro.jpg" alt="Java Arcade Suite Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 04 ] // RETRO ARCHITECTURE</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">Java Desktop Games Collection</h2>
+            <div class="case-body-text">
+              <p>
+                A retrospective collection of arcade classics engineered from the ground up in Java — Snake, Breakout, Pac-Man, and Sokoban — alongside an original custom puzzle title.
+              </p>
+              <p>
+                Every game in the suite is implemented as a pure, self-contained Java Swing application with zero third-party game frameworks. This deliberate constraint emphasizes mastery of core computer science fundamentals: tick-rate loop timing, double buffering, hardware keyboard input polling, and efficient 2D collision quadtrees.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Java</span>
+              <span class="tag-pill">Swing API</span>
+              <span class="tag-pill">Double Buffering</span>
+              <span class="tag-pill">Game Loop Timing</span>
+              <span class="tag-pill">Collision Algorithms</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/04</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Suite Size</td><td>5 Games (4 Classics + 1 Original)</td></tr>
+              <tr><td>Technology</td><td>Java SE · Swing GUI</td></tr>
+              <tr><td>Architecture</td><td>Fixed Timestep Game Loops · Zero Frameworks</td></tr>
+              <tr><td>Platform</td><td>Cross-Platform Desktop JVM</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>Hand-coded game loops running at synchronized frame rates.</li>
+              <li>Ghost AI routing in Pac-Man and tile movement matrices in Sokoban.</li>
+              <li>Clean, modular object-oriented codebase for each title.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ CASE 05: AI CROP RECOMMENDATION ============ -->
+    <article class="case-item" id="ai-crop">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p5-crop.jpg" alt="AI Crop Recommendation Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 05 ] // MACHINE LEARNING & TELEMETRY</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">AI Crop Recommendation System</h2>
+            <div class="case-body-text">
+              <p>
+                An intelligent agricultural prediction system designed to assist farmers by recommending the highest-yielding crops based on real-time ecological data. The system aggregates three dynamic data feeds: soil nutrient analysis (NPK, pH), GPS location coordinates, and live meteorological weather APIs (precipitation, temperature, humidity).
+              </p>
+              <p>
+                The underlying intelligence is driven by a Random Forest Classifier trained using Scikit-learn. The ensemble model provides superior accuracy over single decision trees while remaining fully explainable through feature importance metrics.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Python</span>
+              <span class="tag-pill">Scikit-learn</span>
+              <span class="tag-pill">Random Forest</span>
+              <span class="tag-pill">Live Weather APIs</span>
+              <span class="tag-pill">Data Pipelines</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/05</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Domain</td><td>Predictive Agricultural Analytics</td></tr>
+              <tr><td>Model</td><td>Random Forest Ensemble Classifier</td></tr>
+              <tr><td>Core Stack</td><td>Python · Scikit-learn · Pandas</td></tr>
+              <tr><td>Integrations</td><td>Soil Telemetry · GPS · REST Weather APIs</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>High-accuracy crop classification across diverse climatic conditions.</li>
+              <li>Live external weather API sensor fusion with fallback caching.</li>
+              <li>Explainable ML recommendations showing specific driving features.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ CASE 06: ROBOTIC TELEOPERATION ============ -->
+    <article class="case-item" id="robotic-teleop">
+      <div class="wrap">
+        <div class="case-grid-layout">
+          <div>
+            <div class="case-image-container" data-cursor="ZOOM">
+              <img src="assets/images/p6-teleop.jpg" alt="Vision Robotic Teleoperation Showcase" loading="lazy">
+            </div>
+            <p class="sec-index">[ P / 06 ] // COMPUTER VISION & ROBOTICS</p>
+            <h2 class="sec-title" style="font-size:2.8rem; margin-bottom:1.5rem;">Vision-Based Robotic Teleoperation</h2>
+            <div class="case-body-text">
+              <p>
+                A high-precision human-machine interface that translates complex hand gestures — including structured sign-language alphabets and custom spatial controls — into real-time physical robotic arm motions.
+              </p>
+              <p>
+                The computer vision pipeline processes continuous video streams through OpenCV, extracting 21 anatomical landmarks per hand. These landmarks are normalized and classified, then mapped via inverse kinematics algorithms to robotic end-effector coordinates. Engineered with an emphasis on low latency, the system allows operator teleoperation with natural proprioceptive feedback.
+              </p>
+            </div>
+            <div class="project-tags">
+              <span class="tag-pill">Python</span>
+              <span class="tag-pill">OpenCV</span>
+              <span class="tag-pill">Kinematics</span>
+              <span class="tag-pill">Robotics Control</span>
+              <span class="tag-pill">Low Latency Streaming</span>
+            </div>
+          </div>
+
+          <div class="case-spec-box">
+            <h3 class="case-spec-title">
+              <span>Technical Spec</span>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-yellow)">P/06</span>
+            </h3>
+            <table class="spec-table">
+              <tr><td>Domain</td><td>Computer Vision & Tele-Robotics</td></tr>
+              <tr><td>Vision Engine</td><td>Python · OpenCV · Landmark Tracking</td></tr>
+              <tr><td>Input Pipeline</td><td>Hand Gestures · Sign Language Mapping</td></tr>
+              <tr><td>Output</td><td>Real-time Robotic Actuation Control</td></tr>
+              <tr><td>Status</td><td>Shipped & Verified</td></tr>
+            </table>
+
+            <h4 style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-yellow); margin-bottom:0.75rem;">KEY HIGHLIGHTS</h4>
+            <ul class="highlights-list">
+              <li>Real-time 21-point hand landmark detection and classification.</li>
+              <li>Deterministic coordinate mapping to physical robotic servos.</li>
+              <li>High-frequency low-latency streaming pipeline for fluid teleoperation.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Return to Portfolio Banner -->
+    <div class="wrap" style="padding: 4rem 0; text-align: center;">
+      <a class="flip-btn" href="index.html" data-cursor="INDEX" data-magnetic>
+        <div class="flip-btn-inner">
+          <div class="flip-btn-face flip-btn-front" style="padding: 0.85rem 1.75rem;">
+            <span>← Return to Home</span>
+          </div>
+          <div class="flip-btn-face flip-btn-back" style="padding: 0.85rem 1.75rem;">
+            <span>Back to Index ↗</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <span class="footer-copy">© 2026 ARBAZ ARSHAD — ALL RIGHTS RESERVED</span>
+      <span style="color:var(--accent-yellow)">CODE · CREATE · CONQUER</span>
+      <a class="back-to-top" href="#header" data-cursor="TOP">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

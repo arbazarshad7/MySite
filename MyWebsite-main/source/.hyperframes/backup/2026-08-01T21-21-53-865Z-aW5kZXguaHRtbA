@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, height=1080">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tailwind.css">
+<script src="vendor/gsap.min.js"></script>
+<title>Glitch Title · ARBAZ ARSHAD</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:1920px; height:1080px; overflow:hidden; }
+  body { font-family:'Space Grotesk',sans-serif; background:#050506; color:#fafafa; }
+  .mono { font-family:'JetBrains Mono',monospace; }
+  /* scanlines */
+  body::before {
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
+    background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:multiply; opacity:0.6;
+  }
+  /* grid */
+  body::after {
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:2;
+    background-image: linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .grain { position:absolute; inset:0; opacity:0.1; mix-blend-mode:overlay; z-index:4; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .vignette { position:absolute; inset:0; background:radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.7) 100%); z-index:5; pointer-events:none; }
+  .ascii { font-family:'JetBrains Mono',monospace; letter-spacing:2px; line-height:1; }
+  #root { position:relative; width:1920px; height:1080px; }
+  .layer { position:absolute; inset:0; mix-blend-mode:screen; will-change:transform; }
+  .layer-c { color:rgba(255,255,255,0.62); }
+  .layer-m { color:rgba(255,255,255,0.62); }
+  /* System-font fallbacks referenced by Tailwind's font stacks — declared so the
+     renderer does not treat them as unresolvable. */
+  @font-face { font-family:'Apple Color Emoji'; src:local('Apple Color Emoji'); }
+  @font-face { font-family:'Segoe UI Emoji'; src:local('Segoe UI Emoji'); }
+  @font-face { font-family:'Segoe UI Symbol'; src:local('Segoe UI Symbol'); }
+  @font-face { font-family:'Noto Color Emoji'; src:local('Noto Color Emoji'); }
+  @font-face { font-family:'SFMono-Regular'; src:local('SFMono-Regular'); }
+</style>
+</head>
+<body>
+
+<div data-hf-id="hf-kbh8" id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+
+  <svg data-hf-id="hf-8rgt" width="0" height="0" style="position:absolute">
+    <defs data-hf-id="hf-mh0t">
+      <filter data-hf-id="hf-01nd" id="rgb">
+        <fecolormatrix data-hf-id="hf-8fao" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" />
+        <feoffset data-hf-id="hf-gpwr" in="SourceGraphic" dx="3" dy="0" result="r" />
+        <feoffset data-hf-id="hf-jsms" in="SourceGraphic" dx="-3" dy="0" result="b" />
+        <femerge data-hf-id="hf-zn2o"><femergenode data-hf-id="hf-2bl7" in="r" /><femergenode data-hf-id="hf-jge3" in="b" /><femergenode data-hf-id="hf-cmaw" in="SourceGraphic" /></femerge>
+      </filter>
+    </defs>
+  </svg>
+
+  <header data-hf-id="hf-an9u" id="headerBar" class="absolute top-10 left-12 right-12 flex items-baseline justify-between mono text-[11px] opacity-70 z-10 tracking-[0.16em]">
+    <span data-hf-id="hf-sfwc">&gt;&gt; ARBAZ_ARSHAD · GAME_DEV</span>
+    <span data-hf-id="hf-wimj"></span>
+    <span data-hf-id="hf-5x2o">Aquila</span>
+  </header>
+
+  <pre data-hf-id="hf-hy89" class="ascii absolute top-24 left-12 text-[12px] opacity-30 z-10">█▓▒░ █▓▒░
+▒▓█▓ ░▒▓
+░▒▓█ ▓▒░░
+▓▒░░ ▒▓█▓</pre>
+  <pre data-hf-id="hf-i1eb" class="ascii absolute bottom-24 right-12 text-[12px] opacity-30 z-10 text-right">█▓▒░ ▓▒░█
+▒░░▓ ░▒▓█
+▓▒░░ █▓▒░
+░▒▓█ ▒░░▓</pre>
+
+  <main data-hf-id="hf-qbe1" id="mainBlock" class="relative z-10 text-center px-12" style="position:absolute; left:0; right:0; top:0; bottom:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <div data-hf-id="hf-fh3f" id="eyebrow" class="mono text-[14px] opacity-60 tracking-[0.22em] mb-6 uppercase">— Game Developer —</div>
+    <div data-hf-id="hf-podw" id="name" class="relative inline-block">
+      <h1 data-hf-id="hf-naec" class="font-black tracking-[-0.02em] leading-[0.9]" style="font-size:clamp(80px,12vw,200px)">
+        ARBAZ<br data-hf-id="hf-x5px">ARSHAD
+      </h1>
+      <h1 data-hf-id="hf-ltfo" class="layer layer-c font-black tracking-[-0.02em] leading-[0.9]" style="font-size:clamp(80px,12vw,200px)">
+        ARBAZ<br data-hf-id="hf-rsrt">ARSHAD
+      </h1>
+      <h1 data-hf-id="hf-4jsa" class="layer layer-m font-black tracking-[-0.02em] leading-[0.9]" style="font-size:clamp(80px,12vw,200px)">
+        ARBAZ<br data-hf-id="hf-szow">ARSHAD
+      </h1>
+    </div>
+    <p data-hf-id="hf-op5m" id="subhead" class="mt-10 mono text-[16px] opacity-70 tracking-[0.16em]">
+      CODE · CREATE · CONQUER
+    </p>
+  </main>
+
+  <div data-hf-id="hf-h60x" class="grain"></div>
+  <div data-hf-id="hf-q7bi" class="vignette"></div>
+
+  <footer data-hf-id="hf-0dwq" id="footerBar" class="absolute bottom-10 left-12 right-12 flex items-baseline justify-between mono text-[11px] opacity-50 z-10 tracking-[0.16em]">
+    <span data-hf-id="hf-mu0c"></span>
+    <span data-hf-id="hf-yawo">Unity - Unreal - Blender - Java Swing Game - Adobe Creative Suite - Java - C# - Python - UI/UX - XR - Frontend - Backend - GIT - Supabase - Firebase - AWS - Android Development - Fi</span>
+    <span data-hf-id="hf-kicj" class="mono"></span>
+  </footer>
+
+</div>
+
+<script>
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+  var host = document.getElementById("name");
+  var layersC = document.querySelectorAll(".layer-c");
+  var layersM = document.querySelectorAll(".layer-m");
+
+  // Resting offsets for the white ghost layers (pure-white chromatic offset).
+  gsap.set(layersC, { x: -3, y: 1 });
+  gsap.set(layersM, { x: 3, y: -1 });
+
+  // Initial hidden states — set immediately (outside the timeline) so frame 0 is correct.
+  gsap.set("#headerBar, #footerBar, .ascii, #eyebrow, #subhead", { opacity: 0 });
+  gsap.set("#name", { opacity: 0, y: 26 });
+
+  // ---- Intro: corrupted reveal ----
+  tl.to("#headerBar", { opacity: 0.7, duration: 0.5, ease: "power2.out" }, 0);
+  tl.to(".ascii", { opacity: 0.3, duration: 0.5, ease: "power2.out" }, 0);
+  tl.to("#footerBar", { opacity: 0.5, duration: 0.5, ease: "power2.out" }, 0);
+  tl.to("#eyebrow", { opacity: 0.6, duration: 0.4, ease: "power2.out" }, 0.1);
+  tl.to("#name", { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.12);
+  tl.to("#subhead", { opacity: 0.7, duration: 0.35, ease: "power2.out" }, 0.55);
+
+  // ---- Glitch bursts: seekable, deterministic signature ----
+  function burst(T) {
+    tl.to(host, { x: -5, y: 1, duration: 0.02 }, T);
+    tl.to(layersC, { x: -18, duration: 0.02 }, T);
+    tl.to(layersM, { x: 18, duration: 0.02 }, T);
+    tl.to(host, { x: 7, y: -2, duration: 0.02 }, T + 0.02);
+    tl.to(host, { x: -3, y: 2, duration: 0.02 }, T + 0.04);
+    tl.to(host, { x: 4, y: -1, duration: 0.02 }, T + 0.06);
+    tl.to(host, { x: 0, y: 0, duration: 0.04 }, T + 0.08);
+    tl.to(layersC, { x: -3, y: 1, duration: 0.04 }, T + 0.08);
+    tl.to(layersM, { x: 3, y: -1, duration: 0.04 }, T + 0.08);
+  }
+  burst(4.0);
+  burst(8.0);
+  burst(12.0);
+
+  // ---- Close: settle to a clean, stable lockup ----
+  tl.to(host, { y: 0, duration: 0.5, ease: "power2.out" }, 14.0);
+
+  window.__timelines["main"] = tl;
+</script>
+</body>
+</html>

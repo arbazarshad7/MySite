@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>ARBAZ ARSHAD — Game Developer & Creative Technologist · Code · Create · Conquer</title>
+  <meta name="description" content="Portfolio of Arbaz Arshad — Game Developer, AI Power User, and Tech Wizard. High-performance game systems, multiplayer mechanics, XR experiences, and AI computer vision.">
+  
+  <!-- Open Graph / Meta Cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ARBAZ ARSHAD — Game Developer & Creative Technologist">
+  <meta property="og:description" content="Code · Create · Conquer. High-performance game systems, multiplayer mechanics, XR experiences, and AI computer vision.">
+  <meta property="og:image" content="assets/images/p1-cobra.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ARBAZ ARSHAD — Game Developer">
+  <meta name="twitter:description" content="Multiplayer games, AI systems, computer-vision robotics, and XR architecture.">
+  <meta name="twitter:image" content="assets/images/p1-cobra.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2307080a' width='100' height='100' rx='16'/><text x='50' y='68' text-anchor='middle' font-family='monospace' font-weight='bold' font-size='55' fill='%23e5ff00'>AA</text></svg>">
+
+  <!-- Google Fonts: Editorial & Japanese Agency Typography Mix -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Three.js CDN for WebGL background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- ============ CYBER SHUTTER PRELOADER (JUNNI INTRO) ============ -->
+  <div id="preloader" class="preloader-overlay" aria-hidden="true">
+    <div class="preloader-shutter preloader-shutter-top"></div>
+    <div class="preloader-shutter preloader-shutter-bottom"></div>
+    <div class="preloader-content">
+      <div class="preloader-badge">
+        <span class="preloader-badge-ring"></span>
+        <span class="preloader-badge-text">AA</span>
+      </div>
+      <div class="preloader-title">ARBAZ_ARSHAD // SYSTEM_INIT</div>
+      <div class="preloader-meter">
+        <div class="preloader-bar" id="preloader-bar"></div>
+      </div>
+      <div class="preloader-status">
+        <span id="preloader-log">INITIALIZING GRAPHICS ENGINE...</span>
+        <span class="preloader-pct" id="preloader-pct">00%</span>
+      </div>
+      <button class="preloader-skip" id="preloader-skip" type="button">[SKIP INTRO ↵]</button>
+    </div>
+  </div>
+
+  <!-- ============ FULL-SCREEN MULTI-BLADE PAGE TRANSITION ============ -->
+  <div id="page-shutter" class="page-shutter" aria-hidden="true">
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+    <div class="shutter-blade"></div>
+  </div>
+
+  <!-- ============ MOUSE PARTICLE & SPARK VFX CANVAS ============ -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ THREE.JS WEBGL CANVAS BACKGROUND ============ -->
+  <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-noise" aria-hidden="true"></div>
+  <div class="ambient-glow-orb ambient-glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow-orb ambient-glow-2" aria-hidden="true"></div>
+
+  <!-- ============ CUSTOM MAGNETIC CURSOR (JUNNI STYLE) ============ -->
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-follower" aria-hidden="true">
+    <span>EXPLORE</span>
+  </div>
+
+  <!-- ============ HEADER / TOPBAR ============ -->
+  <header class="topbar" id="header" data-od-id="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html" data-cursor="HOME" aria-label="Arbaz Arshad Home">
+        <span class="brand-dot"></span>
+        <span class="brand-title">ARBAZ<b>_ARSHAD</b></span>
+        <span class="brand-tag">GAME_DEV</span>
+      </a>
+
+      <div class="nav-cluster">
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a class="nav-link" href="#about" data-cursor="ABOUT">About</a></li>
+            <li><a class="nav-link" href="#projects" data-cursor="WORKS">Works</a></li>
+            <li><a class="nav-link" href="#skills" data-cursor="TOOLBOX">Toolbox</a></li>
+            <li><a class="nav-link" href="#experience" data-cursor="HISTORY">Experience</a></li>
+            <li><a class="nav-link" href="#contact" data-cursor="CONTACT">Contact</a></li>
+            <li><a class="nav-link" href="projects.html" data-cursor="ALL CASE STUDIES" style="color:var(--accent-yellow)">Case Studies ↗</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="sound-toggle" id="sound-toggle" type="button" aria-label="Toggle Interface Sound FX" data-cursor="SOUND">
+            <svg class="sound-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path class="sound-wave sound-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path class="sound-wave sound-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <span>SFX: <b class="sound-status-text">OFF</b></span>
+          </button>
+
+          <!-- Mobile Hamburger -->
+          <button class="menu-toggle" type="button" aria-label="Open Navigation Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO SECTION (WITH 6x6 3D MATRIX) ============ -->
+    <section class="hero" id="top" aria-label="Introduction">
+      <div class="wrap">
+        <div class="hero-meta-bar">
+          <div class="hero-status-pill">
+            <span class="status-dot"></span>
+            <span>BUILDING XR &amp; AI</span>
+          </div>
+
+          <!-- Interactive Real-time Oscilloscope Waveform -->
+          <div class="hero-oscilloscope-wrap" title="Real-time Motion Waveform">
+            <canvas id="hero-oscilloscope" width="105" height="24"></canvas>
+            <div class="oscilloscope-meta">
+              <span>DSP: <b>ACTIVE</b></span><br>
+              <span>44.1kHz</span>
+            </div>
+          </div>
+
+          <!-- The Crescendo of Tides Indicator (Chateau Oublié / Unseen Studio) -->
+          <div class="tides-pill" title="Click to trigger tidal surge — The Crescendo of Tides (Terroir Simulation)" data-cursor="SURGE" onclick="window.triggerOceanCrescendo && window.triggerOceanCrescendo()">
+            <span class="tides-icon">≈</span>
+            <span>CRESCENDO OF TIDES</span>
+          </div>
+
+          <div style="font-family: var(--font-mono); letter-spacing:0.15em;">
+            [ 2026_EDITION ]
+          </div>
+        </div>
+
+        <div class="hero-grid-split">
+          <!-- Left: Editorial Typography & Call to Actions -->
+          <div class="hero-title-group">
+            <span class="hero-eyebrow">— Game Developer —</span>
+            <h1 class="hero-headline" data-scramble>
+              <span class="split-char">A</span><span class="split-char">R</span><span class="split-char">B</span><span class="split-char">A</span><span class="split-char">Z</span><br>
+              <span class="accent-line">ARSHAD</span>
+            </h1>
+            <p class="hero-tagline" data-scramble>CODE · CREATE · CONQUER</p>
+            <p class="hero-bio">
+              Crafting immersive games, deterministic state machines, spatial XR solutions, and computer-vision robotics with Unity, Unreal Engine, C#, and AI.
+            </p>
+            <div class="hero-actions">
+              <!-- Junni 3D Flip Button -->
+              <a class="flip-btn" href="#projects" data-cursor="VIEW" data-magnetic>
+                <div class="flip-btn-inner">
+                  <div class="flip-btn-face flip-btn-front">
+                    <span>View Projects</span>
+                    <span class="flip-btn-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                  <div class="flip-btn-face flip-btn-back">
+                    <span>View Projects</span>
+                    <span class="flip-btn-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </span>
+                  </div>
+                </div>
+              </a>
+
+              <a class="flip-btn flip-btn-outline" href="#contact" data-cursor="CONNECT" data-magnetic>
+                <div class="flip-btn-inner">
+                  <div class="flip-btn-face flip-btn-front">
+                    <span>Get In Touch</span>
+                  </div>
+                  <div class="flip-btn-face flip-btn-back">
+                    <span>Let's Build ↗</span>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Glitch Motion Video Button -->
+              <button class="flip-btn flip-btn-outline" id="trigger-glitch-video" type="button" data-cursor="WATCH INTRO" data-magnetic>
+                <div class="flip-btn-inner">
+                  <div class="flip-btn-face flip-btn-front" style="color:var(--accent-cyan); border-color:rgba(0,240,255,0.3)">
+                    <span>▶ Motion Intro</span>
+                  </div>
+                  <div class="flip-btn-face flip-btn-back" style="background:var(--accent-cyan)">
+                    <span>Play Video</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: 6x6 3D Flip Matrix KV (JUNNI Signature) -->
+          <div class="hero-matrix-container" data-cursor="FLIP TILES">
+            <div class="matrix-grid">
+              <!-- Dynamically populated 36 interactive panels via JS -->
+            </div>
+            <div class="matrix-decor-label">
+              <span>INTERACTIVE MATRIX // HOVER TO REVEAL</span>
+              <button id="trigger-matrix-wave" type="button" style="color:var(--accent-yellow); font-family:var(--font-mono); font-size:0.68rem; text-decoration:underline;">[TRIGGER WAVE]</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INFINITE KINETIC MARQUEE ============ -->
+    <div class="marquee-band" aria-hidden="true">
+      <div class="marquee-content">
+        <div class="marquee-item"><span>GAME DESIGN</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>UNITY & UNREAL</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>DETERMINISTIC SYSTEMS</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>SPATIAL COMPUTING / XR</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>AI AGENTS & CV</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>SHADERS & BLENDER</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>MULTIPLAYER NETCODE</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>CODE · CREATE · CONQUER</span><span class="marquee-dot">✦</span></div>
+
+        <!-- Repeated for seamless loop -->
+        <div class="marquee-item"><span>GAME DESIGN</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>UNITY & UNREAL</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>DETERMINISTIC SYSTEMS</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>SPATIAL COMPUTING / XR</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>AI AGENTS & CV</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>SHADERS & BLENDER</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>MULTIPLAYER NETCODE</span><span class="marquee-dot">✦</span></div>
+        <div class="marquee-item"><span>CODE · CREATE · CONQUER</span><span class="marquee-dot">✦</span></div>
+      </div>
+    </div>
+
+    <!-- ============ SECTION 01: ABOUT & INTERACTIVE TERMINAL HUD ============ -->
+    <section id="about" aria-label="About Arbaz Arshad">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="sec-index">[ 01 ] // PHILOSOPHY & DNA</p>
+          <h2 class="sec-title" data-scramble>The Person Behind The Builds.</h2>
+          <p class="sec-sub">Bridging mathematical game systems, machine learning pipelines, and spatial realities.</p>
+        </div>
+
+        <div class="about-grid reveal">
+          <!-- Left: Manifesto & Highlights -->
+          <div class="about-manifesto">
+            <blockquote class="manifesto-quote">
+              "I care about the systems nobody imagines — Game Design, Game Mechanics, UX, Story Elements, clean architecture — because that is where an experience lives or dies."
+            </blockquote>
+            <p class="manifesto-body">
+              From architecting complex state machines for multiplayer card tables to streaming real-time computer vision sign-language gestures to physical robotic actuators, my work centers on rock-solid fundamentals wrapped in refined presentation.
+            </p>
+            <div class="stats-matrix">
+              <div class="stat-box">
+                <div class="stat-ticker"><span class="counter-ticker" data-target="6">0</span><span class="stat-ticker-suffix">+</span></div>
+                <span class="stat-key">Shipped Projects</span>
+                <span class="stat-sub">Unity · Unreal · C# · WebXR</span>
+              </div>
+              <div class="stat-box">
+                <div class="stat-ticker"><span class="counter-ticker" data-target="100">0</span><span class="stat-ticker-suffix">%</span></div>
+                <span class="stat-key">Deterministic Systems</span>
+                <span class="stat-sub">State Machines · Netcode</span>
+              </div>
+              <div class="stat-box">
+                <div class="stat-ticker"><span class="counter-ticker" data-target="60">0</span><span class="stat-ticker-suffix"> FPS</span></div>
+                <span class="stat-key">Performance Benchmark</span>
+                <span class="stat-sub">High Frame Rates · Pure Physics</span>
+              </div>
+              <div class="stat-box">
+                <div class="stat-ticker"><span class="counter-ticker" data-target="24">0</span><span class="stat-ticker-suffix">/7</span></div>
+                <span class="stat-key">Production Ready</span>
+                <span class="stat-sub">Clean Architecture · Zero Fluff</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Cyber Interactive Terminal HUD -->
+          <div class="terminal-hud" data-cursor="TERMINAL">
+            <div class="terminal-header">
+              <div class="terminal-controls">
+                <span class="terminal-dot close"></span>
+                <span class="terminal-dot min"></span>
+                <span class="terminal-dot max"></span>
+              </div>
+              <span class="terminal-title">arbaz@nexus:~ (interactive)</span>
+              <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--accent-yellow)">SYS: READY</span>
+            </div>
+            <div class="terminal-tabs">
+              <button class="terminal-tab-btn active" data-tab="whoami" type="button">whoami</button>
+              <button class="terminal-tab-btn" data-tab="stack" type="button">stack.cfg</button>
+              <button class="terminal-tab-btn" data-tab="philosophy" type="button">manifesto</button>
+              <button class="terminal-tab-btn" data-tab="contact" type="button">ping_me</button>
+            </div>
+            <div class="terminal-body" id="terminal-hud-body">
+              <div class="prompt-line">
+                <span class="prompt-prefix">$</span>
+                <span class="prompt-cmd">whoami</span>
+              </div>
+              <div class="prompt-output">
+                Arbaz Arshad — Game Developer, AI Power User, Tech Wizard.<br>
+                Currently crafting games, XR, AR/VR, and immersive spatial solutions.<br>
+                "I build games and interactive software with Unity, Unreal, C#, Java, Python, and AI."
+              </div>
+              <div class="prompt-line">
+                <span class="prompt-prefix">$</span>
+                <span class="cursor-blink"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 02: SELECTED WORKS ============ -->
+    <section id="projects" aria-label="Selected Projects">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <p class="sec-index">[ 02 ] // SELECTED WORKS</p>
+          <h2 class="sec-title" data-scramble>Engineered Experiences.</h2>
+          <p class="sec-sub">Six milestones across game systems, multiplayer strategy, machine learning, and robotics. Every one shipped, each setting a benchmark.</p>
+        </div>
+
+        <!-- Filter Navigation -->
+        <div class="works-filter-bar reveal">
+          <button class="filter-btn active" data-filter="all" type="button">All Projects (06)</button>
+          <button class="filter-btn" data-filter="game" type="button">Game Development</button>
+          <button class="filter-btn" data-filter="ai" type="button">AI & Robotics</button>
+          <button class="filter-btn" data-filter="systems" type="button">Systems & Logic</button>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="projects-grid">
+          <!-- Project 01: Cobra Card Game -->
+          <article class="project-card reveal reveal-delay-1" data-category="game" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 01</span>
+              <img class="project-img" src="assets/images/p1-cobra.jpg" alt="Cobra Card Game preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-01 // COBRA</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Multiplayer Card Game</span>
+              <h3 class="project-title" data-scramble>Cobra Card Game</h3>
+              <p class="project-desc">
+                Multiplayer turn-based card title with explicit per-phase state machines, mathematical score resolution, and DOTween animation pipelines.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">Unity</span>
+                <span class="tag-pill">C#</span>
+                <span class="tag-pill">DOTween</span>
+                <span class="tag-pill">UI Toolkit</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="cobra-card" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#cobra-card" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 02: Online Chess Game -->
+          <article class="project-card reveal reveal-delay-2" data-category="game" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 02</span>
+              <img class="project-img" src="assets/images/p2-chess.jpg" alt="Online Chess Game preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-02 // CHESS</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Strategy / Multiplayer Netcode</span>
+              <h3 class="project-title" data-scramble>Online Chess Game</h3>
+              <p class="project-desc">
+                Real-time competitive multiplayer chess featuring complete rule-validation engines, check/checkmate detection, and responsive board UI.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">Unity</span>
+                <span class="tag-pill">C#</span>
+                <span class="tag-pill">Turn-Based AI</span>
+                <span class="tag-pill">Netcode</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="online-chess" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#online-chess" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 03: Digital Blackjack -->
+          <article class="project-card reveal reveal-delay-1" data-category="systems" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 03</span>
+              <img class="project-img" src="assets/images/p3-blackjack.jpg" alt="Digital Blackjack preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-03 // BLACKJACK</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Casino Systems / Probability</span>
+              <h3 class="project-title" data-scramble>Digital Blackjack</h3>
+              <p class="project-desc">
+                Deterministic casino logic engine running real card deck-shuffling and probability analysis behind a streamlined responsive UI.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">C#</span>
+                <span class="tag-pill">.NET</span>
+                <span class="tag-pill">Probability Logic</span>
+                <span class="tag-pill">WebGL</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="digital-blackjack" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#digital-blackjack" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 04: Java Desktop Games Collection -->
+          <article class="project-card reveal reveal-delay-2" data-category="game" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 04</span>
+              <img class="project-img" src="assets/images/p4-retro.jpg" alt="Java Retro Games preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-04 // RETRO</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Arcade Suite / Core Fundamentals</span>
+              <h3 class="project-title" data-scramble>Java Desktop Games</h3>
+              <p class="project-desc">
+                Retrospective suite of arcade classics — Snake, Breakout, Pac-Man, and Sokoban — plus a custom puzzle title with zero external libraries.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">Java</span>
+                <span class="tag-pill">Swing</span>
+                <span class="tag-pill">Game Loops</span>
+                <span class="tag-pill">Input Handling</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="java-games" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#java-games" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 05: AI Crop Recommendation System -->
+          <article class="project-card reveal reveal-delay-1" data-category="ai" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 05</span>
+              <img class="project-img" src="assets/images/p5-crop.jpg" alt="AI Crop Recommendation preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-05 // AI CROP</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Machine Learning / Sensor Fusion</span>
+              <h3 class="project-title" data-scramble>AI Crop Recommendation</h3>
+              <p class="project-desc">
+                Agricultural AI model fusing real-time soil telemetry, GPS positioning, and meteorological APIs through an explainable Random Forest classifier.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">Python</span>
+                <span class="tag-pill">Scikit-learn</span>
+                <span class="tag-pill">Random Forest</span>
+                <span class="tag-pill">REST APIs</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="ai-crop" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#ai-crop" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 06: Vision-Based Robotic Teleoperation -->
+          <article class="project-card reveal reveal-delay-2" data-category="ai" data-cursor="INSPECT">
+            <div class="project-media-wrap">
+              <span class="project-badge-num">P / 06</span>
+              <img class="project-img" src="assets/images/p6-teleop.jpg" alt="Robotic Teleoperation preview" loading="lazy">
+              <div class="project-reticle" aria-hidden="true">
+                <span class="reticle-corner tl"></span>
+                <span class="reticle-corner tr"></span>
+                <span class="reticle-corner bl"></span>
+                <span class="reticle-corner br"></span>
+                <span class="reticle-crosshair"></span>
+                <span class="reticle-coords">P-06 // ROBOTICS</span>
+              </div>
+            </div>
+            <div class="project-content">
+              <span class="project-category">Computer Vision & Robotics</span>
+              <h3 class="project-title" data-scramble>Vision Robotic Teleop</h3>
+              <p class="project-desc">
+                High-frequency computer vision pipeline classifying sign-language gestures and streaming real-time kinematic commands to physical robotic arms.
+              </p>
+              <div class="project-tags">
+                <span class="tag-pill">Python</span>
+                <span class="tag-pill">OpenCV</span>
+                <span class="tag-pill">Robotics</span>
+                <span class="tag-pill">Low Latency</span>
+              </div>
+              <div class="project-card-footer">
+                <button class="project-btn-inspect" data-inspect="robotic-teleop" type="button">
+                  <span>Quick Spec Inspect</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <a class="nav-link" href="projects.html#robotic-teleop" style="font-size:0.75rem;">Full Case ↗</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+          <a class="flip-btn" href="projects.html" data-cursor="CASE STUDIES">
+            <div class="flip-btn-inner">
+              <div class="flip-btn-face flip-btn-front" style="padding: 0.85rem 1.85rem;">
+                <span>View All Case Studies (06) →</span>
+              </div>
+              <div class="flip-btn-face flip-btn-back" style="padding: 0.85rem 1.85rem;">
+                <span>Read Full Technical Specs ↗</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 03: SERVICES & TOOLBOX ============ -->
+    <section id="skills" aria-label="Skills and Technical Services">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-index">[ 03 ] // CAPABILITIES & TOOLBOX</p>
+          <h2 class="sec-title">Core Engineering Stack.</h2>
+          <p class="sec-sub">Disciplines honed across commercial deployments, interactive installations, and research builds.</p>
+        </div>
+
+        <div class="service-list">
+          <!-- 01: Game Systems -->
+          <div class="service-item" data-cursor="EXPAND">
+            <div class="service-header">
+              <span class="service-num">01</span>
+              <h3 class="service-name">Game Engines & Systems Architecture</h3>
+            </div>
+            <p class="service-body">
+              Specialized in deterministic mechanics, high-performance C# scripting, state machines, turn management, and custom UI Toolkit setups. From mobile App Store releases to real-time WebGL games.
+            </p>
+            <div class="service-chips">
+              <span class="service-chip">Unity 3D/2D</span>
+              <span class="service-chip">Unreal Engine 5</span>
+              <span class="service-chip">C#</span>
+              <span class="service-chip">DOTween</span>
+              <span class="service-chip">UI Toolkit</span>
+              <span class="service-chip">Java (Swing)</span>
+              <span class="service-chip">WebGL</span>
+              <span class="service-chip">Play Store & App Store Pipelines</span>
+            </div>
+          </div>
+
+          <!-- 02: AI & ML -->
+          <div class="service-item" data-cursor="EXPAND">
+            <div class="service-header">
+              <span class="service-num">02</span>
+              <h3 class="service-name">AI, Machine Learning & Vision Systems</h3>
+            </div>
+            <p class="service-body">
+              Engineering intelligence into machines: Computer Vision hand-tracking, real-time sign language teleoperation, Scikit-learn predictive classifiers, autonomous agents, and game AI behavior trees.
+            </p>
+            <div class="service-chips">
+              <span class="service-chip">Python</span>
+              <span class="service-chip">OpenCV</span>
+              <span class="service-chip">Scikit-learn</span>
+              <span class="service-chip">Random Forest</span>
+              <span class="service-chip">Behavior Trees</span>
+              <span class="service-chip">Local LLM Models</span>
+              <span class="service-chip">Autonomous Agents</span>
+            </div>
+          </div>
+
+          <!-- 03: XR & 3D -->
+          <div class="service-item" data-cursor="EXPAND">
+            <div class="service-header">
+              <span class="service-num">03</span>
+              <h3 class="service-name">Spatial Computing, XR & 3D Production</h3>
+            </div>
+            <p class="service-body">
+              Bridging digital and physical dimensions. Building immersive spatial experiences, WebXR applications, 3D asset workflows in Blender, and UI/UX design with Figma and Adobe Suite.
+            </p>
+            <div class="service-chips">
+              <span class="service-chip">WebXR</span>
+              <span class="service-chip">Spatial Computing</span>
+              <span class="service-chip">Blender 3D</span>
+              <span class="service-chip">Figma</span>
+              <span class="service-chip">Shaders (GLSL)</span>
+              <span class="service-chip">Adobe Premiere / Photoshop</span>
+              <span class="service-chip">AutoCAD</span>
+            </div>
+          </div>
+
+          <!-- 04: Web & Cloud -->
+          <div class="service-item" data-cursor="EXPAND">
+            <div class="service-header">
+              <span class="service-num">04</span>
+              <h3 class="service-name">Backend, Cloud & Real-Time Networking</h3>
+            </div>
+            <p class="service-body">
+              Rock-solid infrastructure for connected applications: WebSockets for synchronous multiplayer, Supabase and Firebase real-time datastores, Cloudflare edges, and REST/GraphQL APIs.
+            </p>
+            <div class="service-chips">
+              <span class="service-chip">WebSockets</span>
+              <span class="service-chip">Supabase</span>
+              <span class="service-chip">Firebase</span>
+              <span class="service-chip">AWS</span>
+              <span class="service-chip">Cloudflare</span>
+              <span class="service-chip">Git / CI-CD</span>
+              <span class="service-chip">REST APIs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 04: EXPERIENCE TIMELINE ============ -->
+    <section id="experience" aria-label="Professional Experience">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="sec-index">[ 04 ] // TRAJECTORY & HISTORY</p>
+          <h2 class="sec-title">Where I Build.</h2>
+          <p class="sec-sub">Production track record across studios, interactive companies, and client commissions.</p>
+        </div>
+
+        <div class="timeline-wrap">
+          <!-- OnyVerse -->
+          <div class="timeline-card" data-cursor="VIEW">
+            <span class="timeline-badge">Current · Software & XR Developer</span>
+            <h3 class="timeline-title">OnyVerse</h3>
+            <p class="timeline-org">Spatial Computing · AR/VR/XR · AI · 3D Solutions</p>
+            <p class="timeline-desc">
+              Building next-generation software, WebXR virtual environments, AI-powered applications, and interactive 3D solutions under the ethos "Goes Beyond Reality". Leading core logic, spatial user experience, and interactive performance optimization.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">C#</span>
+              <span class="tag-pill">Unity</span>
+              <span class="tag-pill">WebXR</span>
+              <span class="tag-pill">Spatial Computing</span>
+              <span class="tag-pill">AI Integration</span>
+            </div>
+          </div>
+
+          <!-- Elisium Space -->
+          <div class="timeline-card" data-cursor="VIEW">
+            <span class="timeline-badge">Game Developer</span>
+            <h3 class="timeline-title">Elisium Space</h3>
+            <p class="timeline-org">Software · Unity Engine · Multiplayer · UI/UX</p>
+            <p class="timeline-desc">
+              Contributed to Unity production by implementing core gameplay mechanics, client-side state prediction, intuitive UI screens, comprehensive unit testing, debugging, and cross-platform profiling.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">Unity 3D</span>
+              <span class="tag-pill">C#</span>
+              <span class="tag-pill">Multiplayer Logic</span>
+              <span class="tag-pill">Optimization</span>
+            </div>
+          </div>
+
+          <!-- Aceopo -->
+          <div class="timeline-card" data-cursor="VIEW">
+            <span class="timeline-badge">Freelance Creative Engineer</span>
+            <h3 class="timeline-title">Aceopo</h3>
+            <p class="timeline-org">UI/UX · 3D Prototyping · Adobe Creative Suite · Blender</p>
+            <p class="timeline-desc">
+              Provided end-to-end digital services: intuitive UI/UX design architectures for web applications, customized 3D models for prototype engineering in Blender, and commercial media post-production.
+            </p>
+            <div class="project-tags">
+              <span class="tag-pill">Blender</span>
+              <span class="tag-pill">Illustrator</span>
+              <span class="tag-pill">Photoshop</span>
+              <span class="tag-pill">Premiere Pro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 05: CONTACT & CTA ============ -->
+    <section class="contact-section" id="contact" aria-label="Contact Arbaz Arshad">
+      <div class="wrap">
+        <div class="contact-card">
+          <p class="sec-index">[ 05 ] // TRANSMISSION INITIATED</p>
+          <h2 class="contact-cta-title">Let's Build Something.<br>Then Let's Ship It.</h2>
+          <p class="contact-cta-desc">
+            Game systems, spatial XR, or AI pipelines — if it needs a robust state machine and a production deadline, I'm ready to collaborate.
+          </p>
+
+          <div class="contact-actions">
+            <!-- Email Flip Button -->
+            <a class="flip-btn" href="mailto:arbazarshad7@gmail.com" data-cursor="EMAIL" data-magnetic>
+              <div class="flip-btn-inner">
+                <div class="flip-btn-face flip-btn-front" style="background:var(--accent-yellow); color:#07080a;">
+                  <span>arbazarshad7@gmail.com ✉</span>
+                </div>
+                <div class="flip-btn-face flip-btn-back" style="background:#fff; color:#07080a;">
+                  <span>Send Direct Email ↗</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- GitHub Flip Button -->
+            <a class="flip-btn flip-btn-outline" href="https://github.com/arbazarshad7" target="_blank" rel="noopener" data-cursor="GITHUB" data-magnetic>
+              <div class="flip-btn-inner">
+                <div class="flip-btn-face flip-btn-front">
+                  <span>GitHub ↗</span>
+                </div>
+                <div class="flip-btn-face flip-btn-back">
+                  <span>Explore Repos ↗</span>
+                </div>
+              </div>
+            </a>
+
+            <!-- LinkedIn Flip Button -->
+            <a class="flip-btn flip-btn-outline" href="https://www.linkedin.com/in/arbaz-arshad-x7" target="_blank" rel="noopener" data-cursor="LINKEDIN" data-magnetic>
+              <div class="flip-btn-inner">
+                <div class="flip-btn-face flip-btn-front">
+                  <span>LinkedIn ↗</span>
+                </div>
+                <div class="flip-btn-face flip-btn-back">
+                  <span>Connect Profile ↗</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="wrap">
+      <span class="footer-copy">© 2026 ARBAZ ARSHAD — ALL RIGHTS RESERVED</span>
+      <span style="color:var(--accent-yellow)">CODE · CREATE · CONQUER</span>
+      <div class="footer-time">
+        <span>LOCAL TIME:</span>
+        <span id="live-time" style="color:#fff; font-weight:700;">--:--:--</span>
+      </div>
+      <a class="back-to-top" href="#top" data-cursor="SCROLL TOP">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- ============ QUICK SPEC INSPECTOR MODAL ============ -->
+  <div class="modal-overlay" id="project-modal" role="dialog" aria-modal="true" aria-label="Project Spec Inspector">
+    <div class="modal-container">
+      <button class="modal-close-btn" id="modal-close-btn" type="button" aria-label="Close Inspector">✕</button>
+      <div class="modal-media-header">
+        <img id="modal-media" src="" alt="Project Preview">
+      </div>
+      <div class="modal-body">
+        <span class="project-category" id="modal-category">CATEGORY</span>
+        <h2 class="project-title" id="modal-title" style="font-size:2.2rem; margin-bottom:1rem;">PROJECT TITLE</h2>
+        <div class="modal-spec-grid" id="modal-spec-grid">
+          <!-- Populated via JS -->
+        </div>
+        <div class="project-desc" id="modal-body-content" style="font-size:1.05rem; line-height:1.8; margin-bottom:1.5rem;">
+          <!-- Populated via JS -->
+        </div>
+        <h4 style="font-family:var(--font-mono); font-size:0.85rem; color:var(--accent-yellow); letter-spacing:0.1em; margin-bottom:0.75rem;">ARCHITECTURAL HIGHLIGHTS:</h4>
+        <ul id="modal-highlights" style="list-style:disc; padding-left:1.5rem; color:var(--text-muted); line-height:1.7; margin-bottom:2rem;">
+          <!-- Populated via JS -->
+        </ul>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <a class="flip-btn" id="modal-full-link" href="projects.html" data-cursor="CASE STUDY">
+            <div class="flip-btn-inner">
+              <div class="flip-btn-face flip-btn-front">
+                <span>Open Full Case Study Page ↗</span>
+              </div>
+              <div class="flip-btn-face flip-btn-back">
+                <span>View Full Page ↗</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GLITCH MOTION VIDEO CINEMA MODAL ============ -->
+  <div class="modal-overlay" id="video-modal" role="dialog" aria-modal="true" aria-label="Motion Video Cinema">
+    <div class="modal-container" style="max-width:1080px; background:#000;">
+      <button class="modal-close-btn" id="video-modal-close" type="button" aria-label="Close Video Player">✕</button>
+      <div style="position:relative; width:100%; aspect-ratio:16/9; background:#000;">
+        <video id="glitch-video-player" src="assets/videos/glitch-intro.mp4" controls preload="metadata" style="width:100%; height:100%; object-fit:contain;"></video>
+      </div>
+      <div style="padding:1.25rem 2rem; display:flex; justify-content:space-between; align-items:center; background:#0d0f14; border-top:1px solid var(--border-subtle);">
+        <div>
+          <span style="font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:#fff;">ARBAZ ARSHAD — GLITCH COMPOSITION</span>
+          <p style="font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted);">60 FPS · Deterministic GSAP Timeline Intro</p>
+        </div>
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-cyan);">HIGH DEFINITION</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LIVE CORNER TELEMETRY HUD ============ -->
+  <aside class="telemetry-hud" aria-label="System Telemetry">
+    <div class="telemetry-radar" aria-hidden="true"></div>
+    <div class="telemetry-item">FPS: <span class="telemetry-val" id="hud-fps">60</span></div>
+    <div class="telemetry-item">POS: <span class="telemetry-val" id="hud-coords">0,0</span></div>
+    <div class="telemetry-item">DEPTH: <span class="telemetry-val" id="hud-scroll">0%</span></div>
+  </aside>
+
+  <!-- Core Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
